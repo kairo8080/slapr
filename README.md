@@ -49,7 +49,7 @@ The local `.env.local` file is only for local testing. Vercel Preview and Produc
 
 The current hosted MVP is built as a static site for GitHub Pages. It uses the browser-side mock generator so it can run without localhost, a server process, or exposed API keys.
 
-The included GitHub Actions workflow deploys `main` to Pages from the `out` directory. `public/CNAME` is set to `slapr.ai`; configure DNS for GitHub Pages before relying on the custom domain.
+The included GitHub Actions workflow deploys `main` to Pages from the `out` directory. Add `public/CNAME` with `slapr.ai` after DNS points at GitHub Pages.
 
 Real OpenAI image generation should run through a server host such as Vercel, not GitHub Pages, because the API key must stay server-side.
 
