@@ -3,20 +3,22 @@
   <desc id="desc">SLAPR rendered in an ANSI Shadow inspired ASCII style using SLAPR red.</desc>
   <rect width="920" height="250" rx="18" fill="#08090B"/>
   <text x="32" y="38" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800">ANSI Shadow</text>
-  <g font-family="Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="900" xml:space="preserve">
+  <g font-family="Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="900">
     <text x="37" y="91" fill="#5F0A0F" opacity="0.95">
-███████╗██╗      █████╗ ██████╗ ██████╗
-██╔════╝██║     ██╔══██╗██╔══██╗██╔══██╗
-███████╗██║     ███████║██████╔╝██████╔╝
-╚════██║██║     ██╔══██║██╔═══╝ ██╔══██╗
-███████║███████╗██║  ██║██║     ██║  ██║
-╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝</text>
+      <tspan x="37" dy="0">███████╗██╗      █████╗ ██████╗ ██████╗</tspan>
+      <tspan x="37" dy="27">██╔════╝██║     ██╔══██╗██╔══██╗██╔══██╗</tspan>
+      <tspan x="37" dy="27">███████╗██║     ███████║██████╔╝██████╔╝</tspan>
+      <tspan x="37" dy="27">╚════██║██║     ██╔══██║██╔═══╝ ██╔══██╗</tspan>
+      <tspan x="37" dy="27">███████║███████╗██║  ██║██║     ██║  ██║</tspan>
+      <tspan x="37" dy="27">╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝</tspan>
+    </text>
     <text x="32" y="86" fill="#FF2D2D">
-███████╗██╗      █████╗ ██████╗ ██████╗
-██╔════╝██║     ██╔══██╗██╔══██╗██╔══██╗
-███████╗██║     ███████║██████╔╝██████╔╝
-╚════██║██║     ██╔══██║██╔═══╝ ██╔══██╗
-███████║███████╗██║  ██║██║     ██║  ██║
-╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝</text>
+      <tspan x="32" dy="0">███████╗██╗      █████╗ ██████╗ ██████╗</tspan>
+      <tspan x="32" dy="27">██╔════╝██║     ██╔══██╗██╔══██╗██╔══██╗</tspan>
+      <tspan x="32" dy="27">███████╗██║     ███████║██████╔╝██████╔╝</tspan>
+      <tspan x="32" dy="27">╚════██║██║     ██╔══██║██╔═══╝ ██╔══██╗</tspan>
+      <tspan x="32" dy="27">███████║███████╗██║  ██║██║     ██║  ██║</tspan>
+      <tspan x="32" dy="27">╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝</tspan>
+    </text>
   </g>
 </svg>
