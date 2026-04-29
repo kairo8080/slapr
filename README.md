@@ -2,6 +2,8 @@
 
 Crypto-native image and video prompt generation for viral social content.
 
+SLAPR is an open-source alpha for turning crypto ideas into social-ready image concepts and video prompts. The current GitHub Pages build uses a static mock generator so anyone can try the interface without accounts, API keys, or a backend.
+
 ## MVP
 
 - Prompt builder for token, narrative, tone, style, and output type
@@ -50,6 +52,10 @@ The current hosted MVP is built as a static site for GitHub Pages. It uses the b
 The included GitHub Actions workflow deploys `main` to Pages from the `out` directory. `public/CNAME` is set to `slapr.ai`; configure DNS for GitHub Pages before relying on the custom domain.
 
 Real OpenAI image generation should run through a server host such as Vercel, not GitHub Pages, because the API key must stay server-side.
+
+## Open Source
+
+SLAPR is released under the MIT License. Contributions are welcome through issues and pull requests.
 
 ## Environment
 
