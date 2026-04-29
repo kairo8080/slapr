@@ -12,13 +12,13 @@ const config: Config = {
         ink: "#101113",
         panel: "#191B1F",
         line: "#2B2F36",
-        mint: "#63F1B5",
+        mint: "#FF2D2D",
         signal: "#F8D35A",
         danger: "#FF6D7A",
         sky: "#7DD3FC"
       },
       boxShadow: {
-        glow: "0 24px 80px rgba(99, 241, 181, 0.14)"
+        glow: "0 24px 80px rgba(255, 45, 45, 0.18)"
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]

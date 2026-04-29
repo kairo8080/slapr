@@ -11,7 +11,7 @@ export const stylePresets: StylePreset[] = [
     id: "meme-terminal",
     label: "Meme Terminal",
     description: "Terminal UI, ticks, warnings, punchline-ready.",
-    swatch: ["#101113", "#63F1B5", "#F8D35A"],
+    swatch: ["#101113", "#FF2D2D", "#F8D35A"],
     prompt:
       "crypto terminal dashboard composition, candlestick fragments, memetic warning labels, crisp UI overlays, social square poster"
   },
@@ -43,7 +43,7 @@ export const stylePresets: StylePreset[] = [
     id: "listing-day",
     label: "Listing Day",
     description: "Exchange-grade launch visual.",
-    swatch: ["#121212", "#FFFFFF", "#63F1B5"],
+    swatch: ["#121212", "#FFFFFF", "#FF2D2D"],
     prompt:
       "exchange listing announcement poster, clean ticker typography, liquidity map backdrop, premium launch campaign visual"
   }

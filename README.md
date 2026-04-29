@@ -1,8 +1,17 @@
+<p align="center">
+  <img src="./public/slapr-ascii-logo.svg" alt="SLAPR ANSI Shadow ASCII logo" width="760">
+</p>
+
 # SLAPR
 
 Crypto-native image and video prompt generation for viral social content.
 
 SLAPR is an open-source alpha for turning crypto ideas into social-ready image concepts and video prompts. The current GitHub Pages build uses a static mock generator so anyone can try the interface without accounts, API keys, or a backend.
+
+## Brand
+
+- Primary color: SLAPR Red `#FF2D2D`
+- Logo style: ANSI Shadow inspired ASCII wordmark
 
 ## MVP
 
