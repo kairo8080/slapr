@@ -11,14 +11,45 @@ Crypto-native image and video prompt generation for viral social content.
 - Copy and regenerate workflow
 - Modular registries for models, providers, styles, tones, and templates
 
-## Run Locally
+## Stable Preview Workflow
 
 ```bash
 npm install
+npm run build
+npm run serve:static
+```
+
+Open `http://127.0.0.1:3000` only for local smoke tests. This serves the exported static `out` folder with Python and avoids Next's hot reload watcher.
+
+For local editing, use the webpack dev server:
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Avoid `npm run dev:turbo` on machines with flaky localhost or filesystem watcher issues.
+
+## Vercel Workflow
+
+Use Vercel Preview deployments as the default review surface instead of localhost previews. `vercel dev` still runs a localhost server, so it is not the recommended path for this machine.
+
+1. Push a branch to GitHub.
+2. Let Vercel create a Preview deployment URL for that branch or pull request.
+3. Promote or merge to `main` for Production.
+4. Add environment variables in Vercel Project Settings:
+   - `AI_PROVIDER`
+   - `OPENAI_API_KEY`
+   - `OPENAI_IMAGE_MODEL`
+
+The local `.env.local` file is only for local testing. Vercel Preview and Production should each have their own environment values.
+
+## GitHub Pages
+
+The current hosted MVP is built as a static site for GitHub Pages. It uses the browser-side mock generator so it can run without localhost, a server process, or exposed API keys.
+
+The included GitHub Actions workflow deploys `main` to Pages from the `out` directory. `public/CNAME` is set to `slapr.ai`; configure DNS for GitHub Pages before relying on the custom domain.
+
+Real OpenAI image generation should run through a server host such as Vercel, not GitHub Pages, because the API key must stay server-side.
 
 ## Environment
 

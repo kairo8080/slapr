@@ -96,7 +96,7 @@ function makeMockImage(input: GenerationRequest, builtPrompt: BuiltPrompt, seed:
   </g>
 </svg>`;
 
-  return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
 function hash(value: string): number {

@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { CreativeForm } from "@/components/CreativeForm";
 import { ResultPanel } from "@/components/ResultPanel";
-import type { ApiError, GenerationRequest, GenerationResult } from "@/lib/types";
+import { buildPrompt } from "@/lib/promptBuilder";
+import { generateMockCreative } from "@/lib/providers/mockProvider";
+import type { GenerationRequest, GenerationResult } from "@/lib/types";
 
 const defaultRequest: GenerationRequest = {
   token: "SLAPR",
@@ -33,18 +35,18 @@ export function GeneratorApp() {
     setError(null);
 
     try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+      const builtPrompt = buildPrompt(payload);
+      const data = await generateMockCreative({
+        input: payload,
+        builtPrompt,
+        model:
+          payload.type === "video"
+            ? "slapr-video-prompt-v0"
+            : payload.modelId === "openai-gpt-image"
+              ? "openai-ready-static-mock"
+              : "slapr-mock-v0",
+        seed: payload.seed ?? makeSeed()
       });
-      const data = (await response.json()) as GenerationResult | ApiError;
-
-      if (!response.ok || "error" in data) {
-        throw new Error("error" in data ? data.error : "Generation failed.");
-      }
 
       setResult(data);
     } catch (generationError) {
