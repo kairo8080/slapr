@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/slapr-ascii-logo.svg" alt="SLAPR ANSI Shadow ASCII logo" width="760">
+  <img src="./public/slapr-ascii-logo.png" alt="SLAPR ANSI Shadow ASCII logo" width="760">
 </p>
 
 # SLAPR
