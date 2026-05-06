@@ -1,3 +1,7 @@
+import {
+  getConsistencyPreset,
+  getModificationPreset
+} from "@/lib/registries/modifications";
 import { getStylePreset } from "@/lib/registries/styles";
 import type { BuiltPrompt, GenerationRequest, GenerationResult } from "@/lib/types";
 
@@ -19,8 +23,8 @@ export async function generateMockCreative({
     input.type === "video"
       ? [
           builtPrompt.prompt,
-          "Shot plan: 0-1s ticker impact frame, 1-3s liquidity sweep, 3-5s narrative reveal, 5-7s final brand lockup.",
-          "Motion: punchy cuts, chart-line transitions, subtle camera push, clean end card."
+          "Shot plan: 0-1s character hook, 1-3s market signal, 3-5s narrative reveal, 5-7s final SLAPR lockup.",
+          "Motion: preserve the uploaded character silhouette across every cut, punchy transitions, clean end card."
         ].join("\n\n")
       : undefined;
 
@@ -28,36 +32,61 @@ export async function generateMockCreative({
     imageUrl,
     prompt: builtPrompt.prompt,
     videoPrompt,
-    provider: "mock",
+    provider: "slapr-local",
     model,
+    modelId: input.modelId,
     type: input.type,
-    seed
+    seed,
+    sourceImageUrl: input.sourceImage?.dataUrl,
+    aspectRatio: input.aspectRatio,
+    status: "ready",
+    notes: input.sourceImage
+      ? ["Local preview keeps the uploaded image visible as the identity anchor."]
+      : ["Upload a PFP or NFT to enable character-lock previews."]
   };
 }
 
 function makeMockImage(input: GenerationRequest, builtPrompt: BuiltPrompt, seed: string): string {
   const style = getStylePreset(input.styleId);
+  const modification = getModificationPreset(input.modificationId);
+  const consistency = getConsistencyPreset(input.consistencyId);
   const palette = style.swatch;
-  const accent = palette[1] ?? "#63F1B5";
+  const accent = "#FF2D2D";
   const warn = palette[2] ?? "#F8D35A";
-  const hue = hash(seed + input.token) % 360;
+  const cool = palette[1] && palette[1] !== accent ? palette[1] : "#7DD3FC";
+  const hue = hash(seed + input.token + input.modelId) % 360;
   const token = escapeXml(input.token.trim().slice(0, 28) || "SLAPR");
-  const label = escapeXml(builtPrompt.metadata.style.toUpperCase());
-  const mode = input.type === "video" ? "VIDEO PROMPT" : "IMAGE DROP";
-  const lines = wrapText(input.narrative.trim() || "Market narrative goes here", 34, 3).map(escapeXml);
+  const character = escapeXml(input.characterName?.trim().slice(0, 28) || "PFP");
+  const label = escapeXml(modification.label.toUpperCase());
+  const lock = escapeXml(consistency.label.toUpperCase());
+  const mode = input.type === "video" ? "VIDEO PROMPT" : "IMAGE EDIT";
+  const lines = wrapText(input.narrative.trim() || "Market narrative goes here", 32, 3).map(escapeXml);
   const chart = makeChartPoints(seed);
+  const sourceImage = input.sourceImage?.dataUrl;
+  const sourceMarkup = sourceImage
+    ? `<image href="${escapeXml(sourceImage)}" x="418" y="270" width="364" height="364" preserveAspectRatio="xMidYMid slice" clip-path="url(#pfpClip)"/>
+       <rect x="418" y="270" width="364" height="364" rx="42" fill="none" stroke="${accent}" stroke-width="8"/>
+       <rect x="438" y="650" width="324" height="48" rx="14" fill="#101113" stroke="#FFFFFF" stroke-opacity="0.16"/>
+       <text x="600" y="681" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="900" fill="#FFFFFF">${character} LOCKED</text>`
+    : `<rect x="418" y="270" width="364" height="364" rx="42" fill="#191B1F" stroke="${accent}" stroke-width="8"/>
+       <text x="600" y="462" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="132" font-weight="950" fill="${accent}">S</text>
+       <text x="600" y="542" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" fill="#FFFFFF">DROP IMAGE</text>`;
+  const variant = input.modelId === "mock-remix-board" ? "REMIX BOARD" : "CHARACTER LOCK";
 
   const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#101113"/>
-      <stop offset="0.48" stop-color="#191B1F"/>
-      <stop offset="1" stop-color="hsl(${hue}, 45%, 14%)"/>
+      <stop offset="0" stop-color="#0A0B0D"/>
+      <stop offset="0.46" stop-color="#17191D"/>
+      <stop offset="1" stop-color="hsl(${hue}, 48%, 14%)"/>
     </linearGradient>
     <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
       <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="1"/>
     </pattern>
+    <clipPath id="pfpClip">
+      <rect x="418" y="270" width="364" height="364" rx="42"/>
+    </clipPath>
     <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18" result="blur"/>
       <feMerge>
@@ -68,31 +97,26 @@ function makeMockImage(input: GenerationRequest, builtPrompt: BuiltPrompt, seed:
   </defs>
   <rect width="1200" height="1200" fill="url(#bg)"/>
   <rect width="1200" height="1200" fill="url(#grid)"/>
-  <path d="M120 778 C274 648 359 771 497 626 C641 475 771 545 1080 305" fill="none" stroke="${accent}" stroke-width="26" stroke-linecap="round" opacity="0.26"/>
+  <path d="M104 780 C250 650 370 748 508 624 C662 486 775 548 1096 292" fill="none" stroke="${accent}" stroke-width="30" stroke-linecap="round" opacity="0.24"/>
   <polyline points="${chart}" fill="none" stroke="${warn}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#softGlow)"/>
-  <circle cx="914" cy="312" r="152" fill="${accent}" opacity="0.14"/>
-  <circle cx="914" cy="312" r="94" fill="none" stroke="${accent}" stroke-width="4" opacity="0.75"/>
-  <circle cx="914" cy="312" r="55" fill="#101113" stroke="${warn}" stroke-width="6"/>
-  <text x="914" y="331" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800" fill="${warn}">$</text>
   <rect x="72" y="76" width="1056" height="1048" rx="34" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="2"/>
-  <rect x="116" y="118" width="294" height="54" rx="12" fill="#FFFFFF" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.12"/>
-  <text x="144" y="153" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="${accent}">SLAPR.AI</text>
-  <text x="930" y="153" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" fill-opacity="0.72">${mode}</text>
-  <text x="116" y="322" font-family="Inter, Arial, sans-serif" font-size="122" font-weight="900" letter-spacing="0" fill="#FFFFFF">${token}</text>
-  <rect x="120" y="382" width="210" height="42" rx="8" fill="${warn}" fill-opacity="0.95"/>
-  <text x="144" y="410" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="900" fill="#101113">${label}</text>
-  <g font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800" fill="#FFFFFF">
-    ${lines.map((line, index) => `<text x="120" y="${535 + index * 64}">${line}</text>`).join("")}
+  <rect x="114" y="118" width="302" height="56" rx="12" fill="${accent}" fill-opacity="0.14" stroke="${accent}" stroke-opacity="0.52"/>
+  <text x="144" y="154" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" fill="${accent}">SLAPR.AI</text>
+  <text x="930" y="153" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#FFFFFF" fill-opacity="0.76">${mode}</text>
+  <text x="120" y="248" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="950" fill="#FFFFFF">${token}</text>
+  ${sourceMarkup}
+  <g transform="translate(120 724)">
+    <rect width="960" height="116" rx="22" fill="#FFFFFF" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.13"/>
+    <text x="30" y="44" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="900" fill="${cool}">${variant}</text>
+    <text x="30" y="86" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="950" fill="#FFFFFF">${label} / ${lock}</text>
   </g>
-  <g transform="translate(120 836)">
-    <rect width="418" height="126" rx="16" fill="#FFFFFF" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.11"/>
-    <text x="30" y="47" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" fill-opacity="0.58">SIGNAL</text>
-    <text x="30" y="94" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="900" fill="${accent}">VIRAL READY</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="45" font-weight="900" fill="#FFFFFF">
+    ${lines.map((line, index) => `<text x="120" y="${924 + index * 58}">${line}</text>`).join("")}
   </g>
-  <g transform="translate(592 836)">
-    <rect width="488" height="126" rx="16" fill="#FFFFFF" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.11"/>
-    <text x="30" y="47" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" fill-opacity="0.58">SEED</text>
-    <text x="30" y="94" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" fill="${warn}">${escapeXml(seed.slice(0, 12).toUpperCase())}</text>
+  <g transform="translate(810 270)">
+    <rect width="270" height="132" rx="18" fill="#101113" fill-opacity="0.78" stroke="${accent}" stroke-opacity="0.5"/>
+    <text x="28" y="48" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF" fill-opacity="0.62">SEED</text>
+    <text x="28" y="96" font-family="Inter, Arial, sans-serif" font-size="35" font-weight="950" fill="${warn}">${escapeXml(seed.slice(0, 8).toUpperCase())}</text>
   </g>
 </svg>`;
 
@@ -112,8 +136,8 @@ function makeChartPoints(seed: string): string {
   const base = hash(seed);
   const points = Array.from({ length: 9 }, (_, index) => {
     const x = 126 + index * 116;
-    const y = 740 - ((base >> (index % 8)) & 120) - index * 26 + (index % 2) * 42;
-    return `${x},${Math.max(260, Math.min(760, y))}`;
+    const y = 700 - ((base >> (index % 8)) & 120) - index * 24 + (index % 2) * 40;
+    return `${x},${Math.max(250, Math.min(735, y))}`;
   });
   return points.join(" ");
 }

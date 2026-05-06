@@ -3,8 +3,19 @@
 @tailwind utilities;
 
 :root {
+  --color-ink: 7 8 10;
+  --color-panel: 13 14 17;
+  --color-line: 44 46 51;
+  --color-brand: 255 45 45;
+  --color-signal: 255 92 92;
+  --color-danger: 255 109 122;
+  --color-sky: 125 211 252;
+  --color-fg: 244 244 245;
+  --color-muted: 159 166 178;
+  --color-subtle: 105 112 125;
+  --scanline-opacity: 0.045;
   color-scheme: dark;
-  background: #101113;
+  background: rgb(var(--color-ink));
 }
 
 * {
@@ -18,12 +29,9 @@ html {
 body {
   min-height: 100%;
   margin: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 45, 45, 0.07), transparent 260px),
-    radial-gradient(circle at 18% 0%, rgba(255, 45, 45, 0.1), transparent 280px),
-    #101113;
-  color: #f4f4f5;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-fg));
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, ui-monospace, monospace;
 }
 
 button,
@@ -38,10 +46,148 @@ button {
 }
 
 ::selection {
-  background: rgba(99, 241, 181, 0.28);
+  background: rgb(var(--color-brand) / 0.24);
 }
 
 .slapr-scroll {
-  scrollbar-color: rgba(255, 255, 255, 0.24) transparent;
+  scrollbar-color: rgb(var(--color-brand) / 0.45) transparent;
   scrollbar-width: thin;
+}
+
+.slapr-app {
+  position: relative;
+  isolation: isolate;
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-fg));
+}
+
+.slapr-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgb(var(--color-fg) / 0.16) 1px, transparent 1px);
+  background-size: 100% 6px;
+  opacity: var(--scanline-opacity);
+}
+
+.slapr-app > * {
+  position: relative;
+  z-index: 1;
+}
+
+.slapr-shell-scale {
+  --ui-scale: 0.75;
+  width: calc(100% / var(--ui-scale));
+  height: calc(100% / var(--ui-scale));
+  transform: scale(var(--ui-scale));
+  transform-origin: top left;
+}
+
+.ascii-brand {
+  margin: 0;
+  color: rgb(var(--color-brand));
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, ui-monospace, monospace;
+  font-size: clamp(5px, 0.45vw, 8px);
+  font-weight: 950;
+  line-height: 0.95;
+  white-space: pre;
+}
+
+@media (max-width: 880px) {
+  .slapr-shell-scale {
+    --ui-scale: 1;
+  }
+}
+
+.theme-day {
+  --color-ink: 248 247 243;
+  --color-panel: 255 254 249;
+  --color-line: 199 193 182;
+  --color-brand: 211 24 24;
+  --color-signal: 136 28 28;
+  --color-danger: 190 32 50;
+  --color-sky: 49 93 120;
+  --color-fg: 22 21 18;
+  --color-muted: 82 80 73;
+  --color-subtle: 122 116 104;
+  --scanline-opacity: 0.03;
+  color-scheme: light;
+}
+
+.theme-night {
+  --color-ink: 7 8 10;
+  --color-panel: 13 14 17;
+  --color-line: 44 46 51;
+  --color-brand: 255 45 45;
+  --color-signal: 255 92 92;
+  --color-danger: 255 109 122;
+  --color-sky: 125 211 252;
+  --color-fg: 244 244 245;
+  --color-muted: 159 166 178;
+  --color-subtle: 105 112 125;
+  --scanline-opacity: 0.045;
+}
+
+.theme-degen {
+  --color-ink: 6 0 1;
+  --color-panel: 15 3 5;
+  --color-line: 98 20 24;
+  --color-brand: 255 30 30;
+  --color-signal: 255 72 72;
+  --color-danger: 255 119 119;
+  --color-sky: 255 126 126;
+  --color-fg: 255 246 246;
+  --color-muted: 215 161 161;
+  --color-subtle: 143 86 86;
+  --scanline-opacity: 0.07;
+}
+
+.slapr-app .rounded-lg,
+.slapr-app .rounded-md {
+  border-radius: 2px;
+}
+
+.slapr-app .shadow-glow {
+  box-shadow: 0 0 0 1px rgb(var(--color-brand) / 0.6);
+}
+
+.slapr-app .backdrop-blur {
+  backdrop-filter: none;
+}
+
+.slapr-app .text-white,
+.slapr-app .text-zinc-100,
+.slapr-app .text-zinc-200,
+.slapr-app .text-zinc-300 {
+  color: rgb(var(--color-fg));
+}
+
+.slapr-app .text-zinc-400 {
+  color: rgb(var(--color-muted));
+}
+
+.slapr-app .text-zinc-500,
+.slapr-app .placeholder\:text-zinc-600::placeholder {
+  color: rgb(var(--color-subtle));
+}
+
+.slapr-app .border-white\/10 {
+  border-color: rgb(var(--color-fg) / 0.12);
+}
+
+.slapr-app .hover\:text-white:hover {
+  color: rgb(var(--color-fg));
+}
+
+.slapr-app .hover\:border-zinc-500:hover {
+  border-color: rgb(var(--color-brand) / 0.65);
+}
+
+.slapr-app input,
+.slapr-app select,
+.slapr-app textarea {
+  caret-color: rgb(var(--color-brand));
+  color: rgb(var(--color-fg));
 }

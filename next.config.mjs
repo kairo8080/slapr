@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
+const isStaticExport = process.env.NEXT_STATIC_EXPORT === "1";
+
 const nextConfig = {
-  output: "export",
-  typedRoutes: true,
+  ...(isStaticExport ? { output: "export" } : {}),
+  typedRoutes: false,
   trailingSlash: true,
   turbopack: {
     root: process.cwd()

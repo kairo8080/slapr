@@ -1,12 +1,14 @@
 {
   "name": "slapr",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev -H 127.0.0.1 -p 3000",
     "dev:turbo": "next dev --turbo -H 127.0.0.1 -p 3000",
     "build": "next build",
-    "start": "python3 -m http.server 3000 --bind 127.0.0.1 --directory out",
+    "build:static": "NEXT_STATIC_EXPORT=1 next build",
+    "start": "node out/server.mjs",
+    "serve:api": "node scripts/local-grok-server.mjs --port 3000",
     "serve:static": "python3 -m http.server 3000 --bind 127.0.0.1 --directory out",
     "typecheck": "tsc --noEmit"
   },

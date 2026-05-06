@@ -9,19 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#101113",
-        panel: "#191B1F",
-        line: "#2B2F36",
-        mint: "#FF2D2D",
-        signal: "#F8D35A",
-        danger: "#FF6D7A",
-        sky: "#7DD3FC"
+        ink: "rgb(var(--color-ink) / <alpha-value>)",
+        panel: "rgb(var(--color-panel) / <alpha-value>)",
+        line: "rgb(var(--color-line) / <alpha-value>)",
+        brand: "rgb(var(--color-brand) / <alpha-value>)",
+        signal: "rgb(var(--color-signal) / <alpha-value>)",
+        danger: "rgb(var(--color-danger) / <alpha-value>)",
+        sky: "rgb(var(--color-sky) / <alpha-value>)"
       },
       boxShadow: {
-        glow: "0 24px 80px rgba(255, 45, 45, 0.18)"
+        glow: "0 0 0 1px rgb(var(--color-brand) / 0.55)"
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        sans: [
+          "SFMono-Regular",
+          "Consolas",
+          "Liberation Mono",
+          "Menlo",
+          "ui-monospace",
+          "monospace"
+        ]
       }
     }
   },
