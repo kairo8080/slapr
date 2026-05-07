@@ -236,7 +236,7 @@ export function ApiKeysPanel({
                       <div className="min-w-0">
                         <p className="truncate text-sm font-black text-white">{credential.label}</p>
                         <p className="truncate text-xs font-bold text-zinc-500">
-                          {providerInfo.label} // {maskKey(credential.key)} // {credential.storage}
+                          {providerInfo.label} {" // "} {maskKey(credential.key)} {" // "} {credential.storage}
                         </p>
                       </div>
                       <button
@@ -307,7 +307,7 @@ export function KeyGuidePanel() {
                   <div>
                     <h3 className="text-sm font-black text-white">{provider.label}</h3>
                     <p className="mt-1 text-xs font-bold uppercase tracking-normal text-zinc-500">
-                      {provider.category} // {provider.implemented ? "wired" : "planned"}
+                      {provider.category} {" // "} {provider.implemented ? "wired" : "planned"}
                     </p>
                   </div>
                   {provider.keyUrl ? (

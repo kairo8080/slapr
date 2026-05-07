@@ -30,7 +30,6 @@ export async function generateOpenAIImage({
   }
 
   const hasSourceImage = Boolean(input.sourceImage?.dataUrl);
-  const endpoint = hasSourceImage ? "edits" : "generations";
   const response = hasSourceImage
     ? await postImageEdit({ apiKey, input, builtPrompt, model })
     : await postImageGeneration({ apiKey, builtPrompt, model });

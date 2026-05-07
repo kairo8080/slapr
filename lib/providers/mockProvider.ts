@@ -18,7 +18,7 @@ export async function generateMockCreative({
   model,
   seed
 }: MockInput): Promise<GenerationResult> {
-  const imageUrl = makeMockImage(input, builtPrompt, seed);
+  const imageUrl = makeMockImage(input, seed);
   const videoPrompt =
     input.type === "video"
       ? [
@@ -46,7 +46,7 @@ export async function generateMockCreative({
   };
 }
 
-function makeMockImage(input: GenerationRequest, builtPrompt: BuiltPrompt, seed: string): string {
+function makeMockImage(input: GenerationRequest, seed: string): string {
   const style = getStylePreset(input.styleId);
   const modification = getModificationPreset(input.modificationId);
   const consistency = getConsistencyPreset(input.consistencyId);

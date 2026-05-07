@@ -351,7 +351,7 @@ export function CreativeForm({
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-black text-white">{model.label}</span>
                         <span className="block truncate text-xs font-semibold text-zinc-500">
-                          {provider.label} // {model.requiresApiKey ? "key" : model.requiresServer ? "server" : "local"}
+                          {provider.label} {" // "} {model.requiresApiKey ? "key" : model.requiresServer ? "server" : "local"}
                         </span>
                         <span className="mt-1 flex flex-wrap gap-1">
                           <span className="rounded-md border border-line bg-panel px-1.5 py-0.5 text-[10px] font-black uppercase text-zinc-500">
@@ -391,7 +391,7 @@ export function CreativeForm({
                       <option value="env">{provider.envVar || "server env"} / server</option>
                       {providerCredentials.map((credential) => (
                         <option key={credential.id} value={credential.id}>
-                          {credential.label} // {credential.storage}
+                          {credential.label} {" // "} {credential.storage}
                         </option>
                       ))}
                     </select>

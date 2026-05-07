@@ -290,7 +290,7 @@ export function GeneratorApp() {
       <div className="slapr-shell-scale flex h-full w-full flex-col gap-3">
         <header className="grid shrink-0 gap-3 border border-line bg-panel/90 px-3 py-2 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center">
           <div className="min-w-0">
-            <pre className="ascii-brand" aria-label="SLAPR v0.1.2 alpha">{String.raw` ____  _        _    ____  ____
+            <pre className="ascii-brand" role="img" aria-label="SLAPR v0.1.2 alpha">{String.raw` ____  _        _    ____  ____
 / ___|| |      / \  |  _ \|  _ \
 \___ \| |     / _ \ | |_) | |_) |
  ___) | |___ / ___ \|  __/|  _ <

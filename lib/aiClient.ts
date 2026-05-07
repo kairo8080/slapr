@@ -104,12 +104,12 @@ function resolveProvider(
   if (provider === "bfl") return "bfl";
   if (provider === "pollinations") return "pollinations";
   if (provider === "mock") return "mock";
-  if (process.env.AI_PROVIDER === "openai" && Boolean(process.env.OPENAI_API_KEY)) return "openai";
-  if (process.env.AI_PROVIDER === "google" && Boolean(process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY)) return "google";
-  if (process.env.AI_PROVIDER === "stability" && Boolean(process.env.STABILITY_API_KEY)) return "stability";
-  if (process.env.AI_PROVIDER === "huggingface" && Boolean(process.env.HF_TOKEN || process.env.HUGGINGFACE_API_KEY)) return "huggingface";
-  if (process.env.AI_PROVIDER === "xai" && Boolean(process.env.XAI_API_KEY)) return "xai";
-  if (process.env.AI_PROVIDER === "bfl" && Boolean(process.env.BFL_API_KEY)) return "bfl";
+  if (process.env.AI_PROVIDER === "openai" && process.env.OPENAI_API_KEY) return "openai";
+  if (process.env.AI_PROVIDER === "google" && (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY)) return "google";
+  if (process.env.AI_PROVIDER === "stability" && process.env.STABILITY_API_KEY) return "stability";
+  if (process.env.AI_PROVIDER === "huggingface" && (process.env.HF_TOKEN || process.env.HUGGINGFACE_API_KEY)) return "huggingface";
+  if (process.env.AI_PROVIDER === "xai" && process.env.XAI_API_KEY) return "xai";
+  if (process.env.AI_PROVIDER === "bfl" && process.env.BFL_API_KEY) return "bfl";
   if (process.env.AI_PROVIDER === "pollinations") return "pollinations";
   return "mock";
 }

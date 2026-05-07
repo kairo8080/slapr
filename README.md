@@ -23,6 +23,10 @@ The current alpha focuses on prompt-to-image and source-image remix workflows, w
 - Next server route support includes provider modules for OpenAI, Google, Stability, Hugging Face, xAI, BFL, Pollinations, and local mock generation.
 - API keys are never committed. Users can provide keys through browser session/local storage for local testing, or through server environment variables for hosted deployments.
 
+## Build In Public
+
+SLAPR is built in public. This repo intentionally shows the authentic process: small increments, rough edges, task notes, verification fixes, and deployment lessons as they happen. The goal is for users and contributors to see steady daily work, not only polished drops after the fact.
+
 ## Vision
 
 SLAPR should become the creative layer between crypto culture and production-grade media models:
@@ -101,9 +105,15 @@ Build commands:
 npm run build
 npm run build:static
 npm run typecheck
+npm run lint
+npm run test
+npm run test:smoke
+npm run check
 ```
 
-`npm run build` creates the server-capable Next build. `npm run build:static` opts into `NEXT_STATIC_EXPORT=1` and writes the static `out` directory. The checked-in `out/server.mjs` is the local static/API preview server used for quick desktop testing.
+`npm run build` creates the server-capable Next build. `npm run build:static` opts into `NEXT_STATIC_EXPORT=1` and writes the static `out` directory. `npm run check` runs typecheck, lint, and unit tests. The checked-in `out/server.mjs` is the local static/API preview server used for quick desktop testing.
+
+Use Node `22.13.0` or another version allowed by `package.json` engines for the cleanest local install.
 
 ## Environment
 

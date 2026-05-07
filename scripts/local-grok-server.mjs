@@ -192,8 +192,6 @@ async function checkProviderKey(provider, apiKey) {
 
 async function checkJsonEndpoint(provider, url, headers) {
   const response = await fetch(url, { headers });
-  const text = await response.text();
-  const payload = parseJson(text);
   if (!response.ok) {
     return {
       ok: false,
